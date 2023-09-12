@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head th:replace="plantilla/template :: head">
+</head>
+<body>
+<header th:replace="plantilla/template :: header"></header>
+
+<div class="container">
+    <h1 th:text="${titulo}"></h1>
+</div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Ciudad</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cl:${clientes}">
+            <th scope="row" th:text="${cl.id}"></th>
+            <td th:text="${cl.nombres}"></td>
+            <td th:text="${cl.apellidos}"></td>
+            <td th:text="${cl.telefono}"></td>
+            <td th:text="${cl.email}"></td>
+            <td th:text="${cl.ciudad.ciudad}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="plantilla/template :: footer"></footer>
+
+</body>
+</html>
