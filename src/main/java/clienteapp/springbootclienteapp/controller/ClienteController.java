@@ -4,6 +4,8 @@ import clienteapp.springbootclienteapp.models.entity.Ciudad;
 import clienteapp.springbootclienteapp.models.entity.Cliente;
 import clienteapp.springbootclienteapp.models.service.ICiudadService;
 import clienteapp.springbootclienteapp.models.service.IClienteService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +19,14 @@ import java.util.List;
 @RequestMapping("/views/clientes")
 public class ClienteController {
 
+    private final Logger logger = LogManager.getLogger(ClienteController.class);
     @Autowired
     private IClienteService clienteService;
 
     @Autowired
     private ICiudadService ciudadService;
 
-    @GetMapping("/")
+    @GetMapping()
     public String listarClientes(Model model) {
         List<Cliente> listadoClientes = (List<Cliente>) clienteService.listarTodos();
 
@@ -46,9 +49,9 @@ public class ClienteController {
 
     @PostMapping("/save")
     public String guardar(@ModelAttribute Cliente cliente) {
-
+        logger.info("Guardando cliente");
         clienteService.guardar(cliente);
-        return "redirect:/views/clientes/";
+        return "redirect:/views/clientes";
     }
 }
 

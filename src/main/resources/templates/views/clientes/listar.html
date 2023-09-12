@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org">
-<head th:replace="plantilla/template :: head">
+<head th:replace="~{plantilla/template :: head}">
 </head>
 <body>
-<header th:replace="plantilla/template :: header"></header>
+<header th:replace="~{plantilla/template :: header}"></header>
 
 <div class="container">
     <h1 th:text="${titulo}"></h1>
@@ -33,13 +33,13 @@
             <td th:text="${cl.apellidos}"></td>
             <td th:text="${cl.telefono}"></td>
             <td th:text="${cl.email}"></td>
-            <td th:text="${cl.ciudad.ciudad}"></td>
+            <td th:text="${cl.ciudad.Ciudad}"></td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<footer th:replace="plantilla/template :: footer"></footer>
+<footer th:replace="~{plantilla/template :: footer}"></footer>
 
 </body>
 </html>

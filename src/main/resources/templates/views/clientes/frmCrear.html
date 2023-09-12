@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeLeaf.org" xmlns="http://www.w3.org/1999/html">
-<head th:replace="plantilla/template :: head">
+<head th:replace="~{plantilla/template :: head}">
 </head>
 <body>
-<header th:replace="plantilla/template :: header"></header>
+<header th:replace="~{plantilla/template :: header}"></header>
 
 <div class="container">
 
@@ -11,7 +11,7 @@
         <div class="card-header bg-dark text-white"th:text="${titulo}"></div>
         <div class="card-body">
 
-    <form th:action="@{/views/clients/save}" th:object="${cliente}" method="post">
+    <form th:action="@{/views/clientes/save}" th:object="${cliente}" method="post">
         <div class="form-group row">
             <label class="col-md-2" for="nombres">Nombres:</label>
             <input type="text" th:field="*{nombres}" class="form-control form-control-sm col-md-6" id="nombres"
@@ -44,8 +44,8 @@
             <label class="col-md-2" for="ciudad">Ciudad:</label>
                 <select th:field="*{ciudad}" class="form-control form-control-sm col-md-6" id="ciudad">
                     <option th:each="ciudad:${ciudades}"
-                        th:value="${ciudad}"
-                        th:text="${ciudad.ciudad}"></option>
+                        th:value="${ciudad.id}"
+                        th:text="${ciudad.Ciudad}"></option>
                 </select>
         </div>
 
@@ -58,7 +58,7 @@
     </div>
 </div>
 
-<footer th:replace="plantilla/template :: footer"></footer>
+<footer th:replace="~{plantilla/template :: footer}"></footer>
 
 </body>
 </html>
