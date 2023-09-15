@@ -49,5 +49,12 @@ public class ClienteServiceImpl implements IClienteService {
         Pageable pageable = PageRequest.of(page, size);
         return (Page<Cliente>) clienteRepository.findAll(pageable);
     }
+
+    @Override
+    public Page<Cliente> buscarClientesPorFiltro(String filtro, int page, int size) {
+        return null;
+    }
+
+
 }
 

@@ -9,6 +9,6 @@ public interface IClienteService {
     public void guardar(Cliente cliente);
     public Cliente buscarPorId(Long id);
     public void eliminar(Long id);
-
     Page<Cliente> getClientesPaginados(int page, int size);
+    Page<Cliente> buscarClientesPorFiltro(String filtro, int page, int size);
 }

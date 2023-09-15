@@ -54,5 +54,19 @@ public class ClienteController {
         clienteService.guardar(cliente);
         return "redirect:/views/clientes";
     }
+
+    @GetMapping("/search")
+    public String buscarClientesFiltrados(Model model, @RequestParam String filtro,
+                                          @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        Page<Cliente> clientePage = clienteService.buscarClientesPorFiltro(filtro, page, size);
+
+        model.addAttribute("titulo", "Lista de Clientes (Filtrada)");
+        model.addAttribute("clientes", clientePage);
+        model.addAttribute("filtro", filtro);
+
+        return "/views/clientes/listar";
+    }
+
+
 }
 

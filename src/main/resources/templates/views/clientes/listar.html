@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeLeaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{plantilla/template :: head}">
 </head>
 <body>
@@ -10,10 +10,14 @@
 </div>
 
 <div class="container">
+    <a class="btn btn-primary btn-sm" th:href="@{/views/clientes/create}" th:text="'Nuevo Cliente'" title="Crear Nuevo Registro"></a>
 
-    <a class="btn btn-primary btn-sm" th:href="@{/views/clientes/create}"
-       th:text="'Nuevo Cliente'" title="Crear Nuevo Registro">
-    </a>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" id="searchTerm" placeholder="Buscar por nombre...">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button" onclick="buscarClientes()">Buscar</button>
+        </div>
+    </div>
 
     <table class="table">
         <thead>
@@ -26,7 +30,7 @@
             <th scope="col">Ciudad</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="tablaClientes">
         <tr th:each="cl:${clientes}">
             <th scope="row" th:text="${cl.id}"></th>
             <td th:text="${cl.nombres}"></td>
@@ -37,39 +41,57 @@
         </tr>
         </tbody>
     </table>
-</div>
 
-<nav aria-label="Page navigation">
-    <ul class="pagination justify-content-center">
-        <li class="page-item" th:if="${clientes.hasPrevious()}">
-            <a class="page-link" th:href="@{/views/clientes(page=0, size=10)}" aria-label="Primero">
-                <span aria-hidden="true">&laquo; Primero</span>
-            </a>
-        </li>
-        <li class="page-item" th:if="${clientes.hasPrevious()}">
-            <a class="page-link" th:href="@{/views/clientes(page=${clientes.previousPageable().pageNumber}, size=10)}" aria-label="Anterior">
-                <span aria-hidden="true">Anterior</span>
-            </a>
-        </li>
-        <li class="page-item" th:each="i : ${#numbers.sequence(0, clientes.totalPages - 1)}" th:class="${i} == ${clientes.number} ? 'active'">
-            <a class="page-link" th:href="@{/views/clientes(page=${i}, size=10)}" th:text="${i + 1}"></a>
-        </li>
-        <li class="page-item" th:if="${clientes.hasNext()}">
-            <a class="page-link" th:href="@{/views/clientes(page=${clientes.nextPageable().pageNumber}, size=10)}" aria-label="Siguiente">
-                <span aria-hidden="true">Siguiente</span>
-            </a>
-        </li>
-        <li class="page-item" th:if="${clientes.hasNext()}">
-            <a class="page-link" th:href="@{/views/clientes(page=${clientes.totalPages - 1}, size=10)}" aria-label="Último">
-                <span aria-hidden="true">Último &raquo;</span>
-            </a>
-        </li>
-    </ul>
-</nav>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:if="${clientes.hasPrevious()}">
+                <a class="page-link" th:href="@{/views/clientes?page=0&amp;size=10}" aria-label="Primero">
+                    <span aria-hidden="true">&laquo; Primero</span>
+                </a>
+            </li>
+            <li class="page-item" th:if="${clientes.hasPrevious()}">
+                <a class="page-link" th:href="@{/views/clientes?page=${clientes.previousPageable().pageNumber}&amp;size=10}" aria-label="Anterior">
+                    <span aria-hidden="true">Anterior</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, clientes.totalPages - 1)}" th:class="${i} == ${clientes.number} ? 'active'">
+                <a class="page-link" th:href="@{/views/clientes?page=${i}&amp;size=10}" th:text="${i + 1}"></a>
+            </li>
+            <li class="page-item" th:if="${clientes.hasNext()}">
+                <a class="page-link" th:href="@{/views/clientes?page=${clientes.nextPageable().pageNumber}&amp;size=10}" aria-label="Siguiente">
+                    <span aria-hidden="true">Siguiente</span>
+                </a>
+            </li>
+            <li class="page-item" th:if="${clientes.hasNext()}">
+                <a class="page-link" th:href="@{/views/clientes?page=${clientes.totalPages - 1}&amp;size=10}" aria-label="Último">
+                    <span aria-hidden="true">Último &raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
-
 
 <footer th:replace="~{plantilla/template :: footer}"></footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var timeout;
+        $('#searchTerm').on('input', function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                var filtro = $('#searchTerm').val();
+                buscarClientes(filtro);
+            }, 300); // Espera 300 ms después de la última entrada para iniciar la búsqueda
+        });
+
+        function buscarClientes(filtro) {
+            $.get('/views/clientes/search?filtro=' + filtro, function (data) {
+                $('#tablaClientes').html(data);
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
