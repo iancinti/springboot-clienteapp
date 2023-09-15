@@ -52,7 +52,11 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Override
     public Page<Cliente> buscarClientesPorFiltro(String filtro, int page, int size) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Cliente> clientes = clienteRepository.findByApellidosContainingIgnoreCase(filtro, pageable);
+
+        return clientes;
     }
 
 

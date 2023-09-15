@@ -64,7 +64,7 @@ public class ClienteController {
         model.addAttribute("clientes", clientePage);
         model.addAttribute("filtro", filtro);
 
-        return "/views/clientes/listar";
+        return "/views/clientes/resultados";
     }
 
 

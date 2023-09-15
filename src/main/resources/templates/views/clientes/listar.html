@@ -45,33 +45,33 @@
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
             <li class="page-item" th:if="${clientes.hasPrevious()}">
-                <a class="page-link" th:href="@{/views/clientes?page=0&amp;size=10}" aria-label="Primero">
+                <a class="page-link" th:href="@{/views/clientes(page=0, size=10)}" aria-label="Primero">
                     <span aria-hidden="true">&laquo; Primero</span>
                 </a>
             </li>
             <li class="page-item" th:if="${clientes.hasPrevious()}">
-                <a class="page-link" th:href="@{/views/clientes?page=${clientes.previousPageable().pageNumber}&amp;size=10}" aria-label="Anterior">
+                <a class="page-link" th:href="@{/views/clientes(page=${clientes.previousPageable().pageNumber}, size=10)}" aria-label="Anterior">
                     <span aria-hidden="true">Anterior</span>
                 </a>
             </li>
             <li class="page-item" th:each="i : ${#numbers.sequence(0, clientes.totalPages - 1)}" th:class="${i} == ${clientes.number} ? 'active'">
-                <a class="page-link" th:href="@{/views/clientes?page=${i}&amp;size=10}" th:text="${i + 1}"></a>
+                <a class="page-link" th:href="@{/views/clientes(page=${i}, size=10)}" th:text="${i + 1}"></a>
             </li>
             <li class="page-item" th:if="${clientes.hasNext()}">
-                <a class="page-link" th:href="@{/views/clientes?page=${clientes.nextPageable().pageNumber}&amp;size=10}" aria-label="Siguiente">
+                <a class="page-link" th:href="@{/views/clientes(page=${clientes.nextPageable().pageNumber}, size=10)}" aria-label="Siguiente">
                     <span aria-hidden="true">Siguiente</span>
                 </a>
             </li>
-            <li class="page-item" th:if="${clientes.hasNext()}">
-                <a class="page-link" th:href="@{/views/clientes?page=${clientes.totalPages - 1}&amp;size=10}" aria-label="Último">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/views/clientes(page=${clientes.totalPages - 1}, size=10)}" aria-label="Último">
                     <span aria-hidden="true">Último &raquo;</span>
                 </a>
             </li>
         </ul>
     </nav>
-</div>
 
-<footer th:replace="~{plantilla/template :: footer}"></footer>
+
+    <footer th:replace="~{plantilla/template :: footer}"></footer>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -94,4 +94,5 @@
 </script>
 
 </body>
+
 </html>
