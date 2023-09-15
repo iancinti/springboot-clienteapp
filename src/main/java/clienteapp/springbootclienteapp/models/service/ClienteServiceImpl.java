@@ -59,6 +59,5 @@ public class ClienteServiceImpl implements IClienteService {
         return clientes;
     }
 
-
 }
 

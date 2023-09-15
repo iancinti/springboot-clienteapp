@@ -12,12 +12,12 @@
 <div class="container">
     <a class="btn btn-primary btn-sm" th:href="@{/views/clientes/create}" th:text="'Nuevo Cliente'" title="Crear Nuevo Registro"></a>
 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" id="searchTerm" placeholder="Buscar por nombre...">
+    <form class="input-group mb-3" th:action="@{/views/clientes}" method="get">
+        <input type="text" class="form-control" name="filtro" th:value="${filtro}" placeholder="Buscar por nombre...">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button" onclick="buscarClientes()">Buscar</button>
+            <button class="btn btn-primary" type="submit" >Buscar</button>
         </div>
-    </div>
+    </form>
 
     <table class="table">
         <thead>
@@ -72,26 +72,6 @@
 </div>
 
     <footer th:replace="~{plantilla/template :: footer}"></footer>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        var timeout;
-        $('#searchTerm').on('input', function () {
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                var filtro = $('#searchTerm').val();
-                buscarClientes(filtro);
-            }, 300); // Espera 300 ms después de la última entrada para iniciar la búsqueda
-        });
-
-        function buscarClientes(filtro) {
-            $.get('/views/clientes/search?filtro=' + filtro, function (data) {
-                $('#tablaClientes').html(data);
-            });
-        }
-    });
-</script>
 
 </body>
 
