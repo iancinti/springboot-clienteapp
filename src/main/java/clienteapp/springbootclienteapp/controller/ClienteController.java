@@ -7,12 +7,11 @@ import clienteapp.springbootclienteapp.models.service.IClienteService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
@@ -26,15 +25,17 @@ public class ClienteController {
     @Autowired
     private ICiudadService ciudadService;
 
-    @GetMapping()
-    public String listarClientes(Model model) {
-        List<Cliente> listadoClientes = (List<Cliente>) clienteService.listarTodos();
+    @GetMapping
+    public String listarClientes(Model model,
+                                 @RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "10") int size) {
+        Page<Cliente> clientePage = clienteService.getClientesPaginados(page, size);
 
         model.addAttribute("titulo", "Lista de Clientes");
-        model.addAttribute("clientes", listadoClientes);
+        model.addAttribute("clientes", clientePage);
+
         return "/views/clientes/listar";
     }
-
     @GetMapping("/create")
     public String crear(Model model) {
 

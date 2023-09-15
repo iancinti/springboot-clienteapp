@@ -39,6 +39,27 @@
     </table>
 </div>
 
+<div class="pagination">
+    <ul>
+        <li th:if="${clientes.hasPrevious()}">
+            <a th:href="@{/views/clientes?page=0&amp;size=10}">&laquo; Primero</a>
+        </li>
+        <li th:if="${clientes.hasPrevious()}">
+            <a th:href="@{/views/clientes?page=${clientes.previousPageable().pageNumber}&amp;size=10}">Anterior</a>
+        </li>
+        <li th:each="i : ${#numbers.sequence(0, clientes.totalPages - 1)}" th:class="${i} == ${clientes.number} ? 'active'">
+            <a th:href="@{/views/clientes?page=${i}&amp;size=10}" th:text="${i + 1}"></a>
+        </li>
+        <li th:if="${clientes.hasNext()}">
+            <a th:href="@{/views/clientes?page=${clientes.nextPageable().pageNumber}&amp;size=10}">Siguiente</a>
+        </li>
+        <li th:if="${clientes.hasNext()}">
+            <a th:href="@{/views/clientes?page=${clientes.totalPages - 1}&amp;size=10}">Último &raquo;</a>
+        </li>
+    </ul>
+</div>
+</div>
+
 <footer th:replace="~{plantilla/template :: footer}"></footer>
 
 </body>

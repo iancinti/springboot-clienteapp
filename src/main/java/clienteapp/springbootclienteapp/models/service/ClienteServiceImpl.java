@@ -6,6 +6,9 @@ import clienteapp.springbootclienteapp.models.repository.ClienteRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +26,7 @@ public class ClienteServiceImpl implements IClienteService {
     }
 
     @Override
-    public void guardar (Cliente cliente) {
+    public void guardar(Cliente cliente) {
         logger.info("Comenzando a guardar cliente");
         Ciudad ciudad = ciudadRepository.findById(cliente.getCiudad().getId()).get();
         logger.info("Se busco la ciudad: " + ciudad);
@@ -41,4 +44,10 @@ public class ClienteServiceImpl implements IClienteService {
         clienteRepository.deleteById(id);
     }
 
+    @Override
+    public Page<Cliente> getClientesPaginados(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return (Page<Cliente>) clienteRepository.findAll(pageable);
+    }
 }
+
