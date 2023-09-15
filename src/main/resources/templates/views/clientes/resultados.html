@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantilla/template :: head}">
+</head>
+<body>
+
+<div class="container">
+    <h1 th:text="'Resultados de búsqueda'" class="my-4"></h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Ciudad</th>
+        </tr>
+        </thead>
+        <tbody id="tablaClientes">
+
+        <tr th:each="cl:${clientes}">
+            <th scope="row" th:text="${cl.id}"></th>
+            <td th:text="${cl.nombres}"></td>
+            <td th:text="${cl.apellidos}"></td>
+            <td th:text="${cl.telefono}"></td>
+            <td th:text="${cl.email}"></td>
+            <td th:text="${cl.ciudad.Ciudad}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
+
