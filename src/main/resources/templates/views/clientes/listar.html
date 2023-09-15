@@ -28,16 +28,20 @@
             <th scope="col">Telefono</th>
             <th scope="col">Correo</th>
             <th scope="col">Ciudad</th>
+            <th scope="col">Seleccionar</th>
         </tr>
         </thead>
         <tbody id="tablaClientes">
-        <tr th:each="cl:${clientes}">
+        <tr th:each="cl, rowStat : ${clientes}">
             <th scope="row" th:text="${cl.id}"></th>
             <td th:text="${cl.nombres}"></td>
             <td th:text="${cl.apellidos}"></td>
             <td th:text="${cl.telefono}"></td>
             <td th:text="${cl.email}"></td>
             <td th:text="${cl.ciudad.Ciudad}"></td>
+            <td>
+                <input type="checkbox" class="cliente-checkbox" th:id="'cliente-checkbox-' + ${rowStat.index}" th:value="${cl.id}">
+            </td>
         </tr>
         </tbody>
     </table>
