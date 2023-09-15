@@ -39,26 +39,35 @@
     </table>
 </div>
 
-<div class="pagination">
-    <ul>
-        <li th:if="${clientes.hasPrevious()}">
-            <a th:href="@{/views/clientes?page=0&amp;size=10}">&laquo; Primero</a>
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:if="${clientes.hasPrevious()}">
+            <a class="page-link" th:href="@{/views/clientes(page=0, size=10)}" aria-label="Primero">
+                <span aria-hidden="true">&laquo; Primero</span>
+            </a>
         </li>
-        <li th:if="${clientes.hasPrevious()}">
-            <a th:href="@{/views/clientes?page=${clientes.previousPageable().pageNumber}&amp;size=10}">Anterior</a>
+        <li class="page-item" th:if="${clientes.hasPrevious()}">
+            <a class="page-link" th:href="@{/views/clientes(page=${clientes.previousPageable().pageNumber}, size=10)}" aria-label="Anterior">
+                <span aria-hidden="true">Anterior</span>
+            </a>
         </li>
-        <li th:each="i : ${#numbers.sequence(0, clientes.totalPages - 1)}" th:class="${i} == ${clientes.number} ? 'active'">
-            <a th:href="@{/views/clientes?page=${i}&amp;size=10}" th:text="${i + 1}"></a>
+        <li class="page-item" th:each="i : ${#numbers.sequence(0, clientes.totalPages - 1)}" th:class="${i} == ${clientes.number} ? 'active'">
+            <a class="page-link" th:href="@{/views/clientes(page=${i}, size=10)}" th:text="${i + 1}"></a>
         </li>
-        <li th:if="${clientes.hasNext()}">
-            <a th:href="@{/views/clientes?page=${clientes.nextPageable().pageNumber}&amp;size=10}">Siguiente</a>
+        <li class="page-item" th:if="${clientes.hasNext()}">
+            <a class="page-link" th:href="@{/views/clientes(page=${clientes.nextPageable().pageNumber}, size=10)}" aria-label="Siguiente">
+                <span aria-hidden="true">Siguiente</span>
+            </a>
         </li>
-        <li th:if="${clientes.hasNext()}">
-            <a th:href="@{/views/clientes?page=${clientes.totalPages - 1}&amp;size=10}">Último &raquo;</a>
+        <li class="page-item" th:if="${clientes.hasNext()}">
+            <a class="page-link" th:href="@{/views/clientes(page=${clientes.totalPages - 1}, size=10)}" aria-label="Último">
+                <span aria-hidden="true">Último &raquo;</span>
+            </a>
         </li>
     </ul>
+</nav>
 </div>
-</div>
+
 
 <footer th:replace="~{plantilla/template :: footer}"></footer>
 
