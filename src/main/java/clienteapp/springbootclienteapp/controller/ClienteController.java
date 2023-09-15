@@ -28,11 +28,19 @@ public class ClienteController {
     @GetMapping
     public String listarClientes(Model model,
                                  @RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size) {
-        Page<Cliente> clientePage = clienteService.getClientesPaginados(page, size);
+                                 @RequestParam(defaultValue = "10") int size,
+                                 @RequestParam(required = false) String filtro) {
+        Page<Cliente> clientePage;
 
+        if (filtro != null && !filtro.isEmpty()) {
+            clientePage = clienteService.buscarClientesPorFiltro(filtro, page, size);
+        } else {
+            clientePage = clienteService.getClientesPaginados(page, size);
+            filtro = "";
+        }
         model.addAttribute("titulo", "Lista de Clientes");
         model.addAttribute("clientes", clientePage);
+        model.addAttribute("filtro", filtro);
 
         return "/views/clientes/listar";
     }
