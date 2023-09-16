@@ -100,6 +100,7 @@ public class ClienteController {
 
     @GetMapping("/download-pdf")
     public void downloadPdf(@RequestParam("ids") List<Long> selectedIds, HttpServletResponse response) {
+        logger.info("Identificadores seleccionados: " + selectedIds);
         try {
             response.setContentType("application/pdf");
             response.setHeader("Content-Disposition", "attachment; filename=selected_clients.pdf");

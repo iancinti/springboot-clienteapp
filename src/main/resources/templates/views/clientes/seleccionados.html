@@ -11,7 +11,9 @@
 
 <div class="container">
 
-    <a class="btn btn-primary" th:href="@{/views/clientes/download-pdf}" target="_blank">Descargar PDF</a>
+    <p>Identificadores seleccionados: <span th:text="${selectedIds}"></span></p>
+
+    <a class="btn btn-primary" href="/views/clientes/download-pdf?ids=1,2,3" target="_blank">Descargar PDF</a>
 
 
     <table class="table">
