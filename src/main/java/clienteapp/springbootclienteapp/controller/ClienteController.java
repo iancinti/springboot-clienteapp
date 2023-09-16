@@ -4,6 +4,11 @@ import clienteapp.springbootclienteapp.models.entity.Ciudad;
 import clienteapp.springbootclienteapp.models.entity.Cliente;
 import clienteapp.springbootclienteapp.models.service.ICiudadService;
 import clienteapp.springbootclienteapp.models.service.IClienteService;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/views/clientes")
@@ -88,6 +96,44 @@ public class ClienteController {
 
         model.addAttribute("selectedClientes", selectedClientes);
         return "/views/clientes/seleccionados";
+    }
+
+    @GetMapping("/download-pdf")
+    public void downloadPdf(@RequestParam("ids") List<Long> selectedIds, HttpServletResponse response) {
+        try {
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=selected_clients.pdf");
+
+            OutputStream outputStream = response.getOutputStream();
+            PdfWriter pdfWriter = new PdfWriter(outputStream);
+            PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+            Document document = new Document(pdfDocument);
+
+            for (Long clientId : selectedIds) {
+                Cliente cliente = clienteService.getClienteDetailsById(clientId);
+                document.add(new Paragraph("ID: " + cliente.getId()));
+                document.add(new Paragraph("Nombres: " + cliente.getNombres()));
+                document.add(new Paragraph("Apellidos: " + cliente.getApellidos()));
+                document.add(new Paragraph("\n"));
+            }
+
+            document.close();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ControllerAdvice
+    public static class GlobalExceptionHandler {
+
+        @ExceptionHandler(Exception.class)
+        public String handleException(Exception ex, Model model) {
+            String errorMessage = "Se ha producido un error en la aplicación.";
+            model.addAttribute("errorMessage", errorMessage);
+            return "/views/clientes/error";
+        }
     }
 
 }

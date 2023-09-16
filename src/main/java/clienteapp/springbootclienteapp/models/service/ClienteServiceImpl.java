@@ -66,5 +66,10 @@ public class ClienteServiceImpl implements IClienteService {
         return (List<Cliente>) clienteRepository.findAllById(selectedIdsList);
     }
 
+    @Override
+    public Cliente getClienteDetailsById(Long clientId) {
+        return clienteRepository.findById(clientId).orElse(null);
+    }
+
 }
 

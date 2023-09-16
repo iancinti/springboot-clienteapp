@@ -15,4 +15,6 @@ public interface IClienteService {
     Page<Cliente> buscarClientesPorFiltro(String filtro, int page, int size);
 
     List<Cliente> getClientesPorIds(List<Long> selectedIdsList);
+
+    Cliente getClienteDetailsById(Long clientId);
 }
