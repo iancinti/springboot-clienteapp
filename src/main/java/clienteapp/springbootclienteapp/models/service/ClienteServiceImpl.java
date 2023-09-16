@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ClienteServiceImpl implements IClienteService {
 
@@ -57,6 +59,11 @@ public class ClienteServiceImpl implements IClienteService {
         Page<Cliente> clientes = clienteRepository.findByApellidosContainingIgnoreCase(filtro, pageable);
 
         return clientes;
+    }
+
+    @Override
+    public List<Cliente> getClientesPorIds(List<Long> selectedIdsList) {
+        return (List<Cliente>) clienteRepository.findAllById(selectedIdsList);
     }
 
 }

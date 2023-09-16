@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/views/clientes")
@@ -76,6 +78,17 @@ public class ClienteController {
         return "/views/clientes/resultados";
     }
 
+    @GetMapping("/seleccionados")
+    public String verSeleccionados(@RequestParam(name = "ids") String selectedIds, Model model) {
+        List<Long> selectedIdsList = Arrays.stream(selectedIds.split(","))
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
+
+        List<Cliente> selectedClientes = clienteService.getClientesPorIds(selectedIdsList);
+
+        model.addAttribute("selectedClientes", selectedClientes);
+        return "/views/clientes/seleccionados";
+    }
 
 }
 

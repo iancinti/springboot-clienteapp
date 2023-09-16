@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{plantilla/template :: head}">
+</head>
+<body data-bs-theme="dark">
+<header th:replace="~{plantilla/template :: header}"></header>
+
+<div class="container">
+    <h1>Elementos Seleccionados</h1>
+</div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Ciudad</th>
+        </tr>
+        </thead>
+        <tbody id="tablaClientes">
+
+        <tr th:each="cliente : ${selectedClientes}">
+            <th scope="row" th:text="${cliente.id}"></th>
+            <td th:text="${cliente.nombres}"></td>
+            <td th:text="${cliente.apellidos}"></td>
+            <td th:text="${cliente.telefono}"></td>
+            <td th:text="${cliente.email}"></td>
+            <td th:text="${cliente.ciudad.Ciudad}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="~{plantilla/template :: footer}"></footer>
+
+</body>
+</html>
