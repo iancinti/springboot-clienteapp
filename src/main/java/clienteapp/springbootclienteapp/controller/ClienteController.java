@@ -87,23 +87,22 @@ public class ClienteController {
     }
 
     @GetMapping("/seleccionados")
-    public String verSeleccionados(@RequestParam(name = "ids") String selectedIds, Model model) {
-        List<Long> selectedIdsList = Arrays.stream(selectedIds.split(","))
-                .map(Long::parseLong)
-                .collect(Collectors.toList());
-
-        List<Cliente> selectedClientes = clienteService.getClientesPorIds(selectedIdsList);
-
-        model.addAttribute("selectedClientes", selectedClientes);
+    public String verSeleccionados(@RequestParam(name = "ids", required = false) List<Long> ids, Model model) {
+        if (ids != null && !ids.isEmpty()) {
+            List<Cliente> selectedClientes = clienteService.getClientesPorIds(ids);
+            model.addAttribute("selectedClientes", selectedClientes);
+        }
         return "/views/clientes/seleccionados";
     }
+
+
 
     @GetMapping("/download-pdf")
     public void downloadPdf(@RequestParam("ids") List<Long> selectedIds, HttpServletResponse response) {
         logger.info("Identificadores seleccionados: " + selectedIds);
         try {
             response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename=selected_clients.pdf");
+            response.setHeader("Content-Disposition", "attachment; filename=clientes_seleccionados.pdf");
 
             OutputStream outputStream = response.getOutputStream();
             PdfWriter pdfWriter = new PdfWriter(outputStream);

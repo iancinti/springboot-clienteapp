@@ -19,7 +19,7 @@
         </div>
     </form>
 
-    <a class="btn btn-primary" th:href="@{/views/clientes/seleccionados?ids=1,2,3}">Ver Seleccionados</a>
+    <a class="btn btn-primary" href="/views/clientes/seleccionados?ids=1,2,3" target="_blank">Ver Seleccionados</a>
 
     <table class="table">
         <thead>
@@ -42,7 +42,7 @@
             <td th:text="${cl.email}"></td>
             <td th:text="${cl.ciudad.Ciudad}"></td>
             <td>
-                <input type="checkbox" class="cliente-checkbox" th:id="'cliente-checkbox-' + ${rowStat.index}" th:value="${cl.id}">
+                <input type="checkbox" class="cliente-checkbox" name="ids" th:id="'cliente-checkbox-' + ${rowStat.index}" th:value="${cl.id}">
             </td>
         </tr>
         </tbody>

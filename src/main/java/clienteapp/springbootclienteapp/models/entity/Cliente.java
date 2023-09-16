@@ -15,6 +15,7 @@ public class Cliente implements Serializable {
     private String apellidos;
     private String telefono;
     private String email;
+    private boolean selected;
 
     @ManyToOne
     @JoinColumn(name="ciudad")
@@ -66,6 +67,14 @@ public class Cliente implements Serializable {
 
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override
