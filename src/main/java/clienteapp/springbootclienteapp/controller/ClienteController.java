@@ -38,7 +38,7 @@ public class ClienteController {
     @GetMapping
     public String listarClientes(Model model,
                                  @RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "10") int size,
+                                 @RequestParam(defaultValue = "30") int size,
                                  @RequestParam(required = false) String filtro) {
         Page<Cliente> clientePage;
 
@@ -91,6 +91,7 @@ public class ClienteController {
         if (ids != null && !ids.isEmpty()) {
             List<Cliente> selectedClientes = clienteService.getClientesPorIds(ids);
             model.addAttribute("selectedClientes", selectedClientes);
+            model.addAttribute("selectedIds", ids);
         }
         return "/views/clientes/seleccionados";
     }
