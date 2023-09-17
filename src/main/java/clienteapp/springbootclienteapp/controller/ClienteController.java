@@ -86,7 +86,7 @@ public class ClienteController {
         return "/views/clientes/resultados";
     }
 
-    @GetMapping("/seleccionados")
+    @PostMapping("/seleccionados")
     public String verSeleccionados(@RequestParam(name = "ids", required = false) List<Long> ids, Model model) {
         if (ids != null && !ids.isEmpty()) {
             List<Cliente> selectedClientes = clienteService.getClientesPorIds(ids);
