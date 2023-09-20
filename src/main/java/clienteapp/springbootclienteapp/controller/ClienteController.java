@@ -16,16 +16,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Controller
 @RequestMapping("/views/clientes")
+@Api(tags ="Clientes", description = "Controlador para la gestion de clientes")
 public class ClienteController {
 
     private final Logger logger = LogManager.getLogger(ClienteController.class);
@@ -38,7 +38,7 @@ public class ClienteController {
     @GetMapping
     public String listarClientes(Model model,
                                  @RequestParam(defaultValue = "0") int page,
-                                 @RequestParam(defaultValue = "30") int size,
+                                 @RequestParam(defaultValue = "20") int size,
                                  @RequestParam(required = false) String filtro) {
         Page<Cliente> clientePage;
 
@@ -55,6 +55,7 @@ public class ClienteController {
         return "/views/clientes/listar";
     }
     @GetMapping("/create")
+    @ApiOperation(value= "Mostrar formulario para crear un nuevo cliente")
     public String crear(Model model) {
 
         Cliente cliente = new Cliente();
